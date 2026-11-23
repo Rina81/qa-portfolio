@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test'; 
-test('create a booking', async ({ request }) => {
+test('delete a booking', async ({ request }) => {
   const newBooking = {
     firstname: 'Jim',
     lastname: 'Brown',
@@ -17,10 +17,8 @@ test('create a booking', async ({ request }) => {
 const authResponse = await request.post('/auth', {
   data: { username: 'admin', password: 'password123' },
 });
-console.log(authResponse.status(), await authResponse.json());   // LOOK first
-const token = (await authResponse.json()).token;                 // check the field name in the output
-console.log(token);
 
+const token = (await authResponse.json()).token;                 // check the field name in the output
 // 2. delete the booking, proving who you are with the token
 const deleteResponse = await request.delete(`/booking/${id}`, {
   headers: { Cookie: `token=${token}` },
